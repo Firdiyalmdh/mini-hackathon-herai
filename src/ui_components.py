@@ -25,6 +25,7 @@ def apply_theme():
 
     st.markdown(f"""
     <style>
+        /* HILANGKAN HEADER BAWAAN STREAMLIT */
         header[data-testid="stHeader"], 
         .stAppHeader, 
         [data-testid="stHeader"] {{
@@ -114,24 +115,50 @@ def apply_theme():
             font-weight: 600 !important;
         }}
 
+        /* ==============================================================================
+           PERBAIKAN UTAMA: MENAMPUNG CONTAINER INPUT AGAR TERLIHAT PUTIH BERSIH
+           ============================================================================== */
+
+        /* 1. Paksa seluruh container luar & dalam input berlatar putih */
         div[data-baseweb="input"], 
         div[data-baseweb="base-input"],
         div[data-baseweb="input"] > div,
+        div[data-testid="stNumberInputContainer"],
+        div[data-testid="stNumberInputContainer"] > div,
+        .stTextInput > div > div,
+        .stNumberInput > div > div,
+        .stTextArea > div > div {{
+            background-color: #FFFFFF !important;
+            border-color: {THEME['border']} !important;
+            color: {THEME['text_primary']} !important;
+            border-radius: 10px !important;
+        }}
+
+        /* 2. Styling elemen input langsung */
         input[type="number"],
         input[type="text"],
         textarea {{
             background-color: #FFFFFF !important;
             color: {THEME['text_primary']} !important;
             -webkit-text-fill-color: {THEME['text_primary']} !important;
-            border-radius: 10px !important;
+            border: none !important;
         }}
 
+        /* 3. Menghilangkan efek border hitam saat input sedang aktif/diklik */
+        div[data-baseweb="input"]:focus-within,
+        div[data-testid="stNumberInputContainer"]:focus-within {{
+            border-color: {THEME['primary']} !important;
+            box-shadow: 0 0 0 2px rgba(0, 166, 166, 0.2) !important;
+        }}
+
+        /* 4. Perbaikan warna placeholder */
         ::placeholder, textarea::placeholder, input::placeholder {{
             color: {THEME['text_secondary']} !important;
             opacity: 0.7 !important;
             -webkit-text-fill-color: {THEME['text_secondary']} !important;
         }}
 
+        /* 5. Perbaikan Radio Button */
         div[role="radiogroup"] label {{
             color: {THEME['text_primary']} !important;
             background-color: #FFFFFF !important;
@@ -141,11 +168,13 @@ def apply_theme():
             font-size: 13px !important;
         }}
 
+        /* 6. Perbaikan Tombol + / - pada Number Input */
         div[data-testid="stNumberInputContainer"] button {{
             background-color: {THEME['primary_light']} !important;
             color: {THEME['primary_dark']} !important;
             border: 1px solid {THEME['border']} !important;
             border-radius: 8px !important;
+            margin: 2px !important;
         }}
 
         div[data-testid="stNumberInputContainer"] button:hover {{
@@ -153,6 +182,7 @@ def apply_theme():
             color: #FFFFFF !important;
         }}
 
+        /* TOMBOL SUBMIT */
         .stButton > button, div[data-testid="stFormSubmitButton"] > button {{
             background-color: {THEME['primary']} !important;
             color: #FFFFFF !important;
@@ -180,7 +210,6 @@ def apply_theme():
             color: {THEME['text_primary']};
         }}
 
-        /* BADGES STATUS */
         .badge-stunted {{
             background-color: #FEF2F2;
             color: {THEME['danger']};
@@ -229,7 +258,7 @@ def render_header():
                     <i class="fa-solid fa-stethoscope"></i>
                 </div>
                 <div>
-                    <h2 style="margin: 0; font-size: 18px; font-weight: 700; color: {THEME['text_primary']}; line-height: 1.2;">AIDE-Stunt</h2>
+                    <h2 style="margin: 0; font-size: 18px; font-weight: 700; color: {THEME['text_primary']}; line-height: 1.2;">NutrAI Kids</h2>
                     <p style="margin: 0; font-size: 12px; color: {THEME['text_secondary']};">Pedoman Tumbuh Kembang Anak</p>
                 </div>
             </div>
@@ -265,7 +294,6 @@ def render_form():
                     </h3>
                     <p style="margin: 2px 0 0 0; font-size: 12px; color: {THEME['text_secondary']};">Lengkapi parameter di bawah untuk memulai analisis screening.</p>
                 </div>
-                <span style="font-size: 11px; background-color: {THEME['background']}; padding: 4px 8px; border-radius: 6px; color: {THEME['text_secondary']}; font-weight: 600;">Langkah 1/2</span>
             </div>
     """, unsafe_allow_html=True)
 
@@ -383,7 +411,7 @@ def render_empty_state():
             </div>
             <h4 style="margin: 0 0 6px 0; font-size: 15px; font-weight: 700; color: {THEME['text_primary']};">Hasil Screening Belum Tersedia</h4>
             <p style="margin: 0; font-size: 13px; color: {THEME['text_secondary']}; line-height: 1.5;">
-                Silakan isi data antropometri buah hati Anda pada formulir di samping, lalu klik <b>Analisis Pertumbuhan Anak</b>.
+                Silakan isi data antropometri buah hati Anda pada formulir, lalu klik <b>Analisis Pertumbuhan Anak</b>.
             </p>
         </div>
     """, unsafe_allow_html=True)
