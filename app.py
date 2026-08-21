@@ -12,7 +12,7 @@ from src.zscore_calc import calculate_zscore
 from src.ai_engine import generate_stunting_analysis
 
 st.set_page_config(
-    page_title="AIDE-Stunt - Deteksi Tumbuh Kembang Anak",
+    page_title="NutrAI Kids - Deteksi Tumbuh Kembang Anak",
     page_icon="🩺",
     layout="wide",
     initial_sidebar_state="collapsed"
