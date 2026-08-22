@@ -25,7 +25,7 @@ THEME = {
 
 
 def apply_theme():
-    """Menginjeksikan CSS kustom untuk memperbarui UI/UX aplikasi."""
+    
     st.markdown("""
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -138,7 +138,7 @@ def apply_theme():
             border-radius: 10px !important;
         }}
 
-        /* PERBAIKAN 3: Textarea Container & Border Light Theme */
+
         div[data-baseweb="textarea"],
         .stTextArea > div > div {{
             background-color: #FFFFFF !important;
@@ -181,7 +181,7 @@ def apply_theme():
             font-size: 13px !important;
         }}
 
-        /* PERBAIKAN 2: Radio Button Empty State (Warna Putih & Light Border) */
+        
         div[role="radiogroup"] div[data-checked="false"] div[data-testid="stRadioButtonCustomIcon"] {{
             background-color: #FFFFFF !important;
             border: 2px solid {THEME['border']} !important;
@@ -432,7 +432,7 @@ def render_result_dashboard(z_score, status, data_json):
 
 
 def render_empty_state():
-    """Renders default state before form submission."""
+    
     st.markdown(f"""
         <div class="card-container" style="text-align: center; padding: 40px 20px;">
             <div style="width: 48px; height: 48px; background-color: {THEME['background']}; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 12px auto; color: {THEME['text_secondary']}; font-size: 20px;">
