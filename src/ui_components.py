@@ -1,23 +1,31 @@
 import streamlit as st
 
+st.set_page_config(
+    page_title="NutrAI Kids - Deteksi Tumbuh Kembang Anak",
+    page_icon="👶",
+    layout="wide",
+    initial_sidebar_state="collapsed"
+)
+
 THEME = {
-    "primary": "#00A6A6",        
-    "primary_dark": "#00796B",   
-    "primary_light": "#E6F7F6",  
-    "secondary": "#2563EB",      
-    "background": "#F8FAFC",     
-    "surface": "#FFFFFF",        
-    "text_primary": "#0F172A",   
-    "text_secondary": "#64748B", 
-    "border": "#E2E8F0",         
-    "success": "#16A34A",        
-    "warning": "#F59E0B",        
-    "danger": "#DC2626",         
-    "info": "#2563EB",       
+    "primary": "#00A6A6",
+    "primary_dark": "#00796B",
+    "primary_light": "#E6F7F6",
+    "secondary": "#2563EB",
+    "background": "#F8FAFC",
+    "surface": "#FFFFFF",
+    "text_primary": "#0F172A",
+    "text_secondary": "#64748B",
+    "border": "#E2E8F0",
+    "success": "#16A34A",
+    "warning": "#F59E0B",
+    "danger": "#DC2626",
+    "info": "#2563EB",
 }
 
 
 def apply_theme():
+    """Menginjeksikan CSS kustom untuk memperbarui UI/UX aplikasi."""
     st.markdown("""
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -25,7 +33,7 @@ def apply_theme():
 
     st.markdown(f"""
     <style>
-        /* HILANGKAN HEADER BAWAAN STREAMLIT */
+        /* --- General Layout --- */
         header[data-testid="stHeader"], 
         .stAppHeader, 
         [data-testid="stHeader"] {{
@@ -49,6 +57,7 @@ def apply_theme():
             padding-bottom: 3rem !important;
         }}
 
+        /* --- Reusable Components & Cards --- */
         .app-header {{
             background-color: {THEME['surface']};
             border-bottom: 1px solid {THEME['border']};
@@ -115,26 +124,29 @@ def apply_theme():
             font-weight: 600 !important;
         }}
 
-        /* ==============================================================================
-           PERBAIKAN UTAMA: MENAMPUNG CONTAINER INPUT AGAR TERLIHAT PUTIH BERSIH
-           ============================================================================== */
-
-        /* 1. Paksa seluruh container luar & dalam input berlatar putih */
+        /* --- Input Fields & Containers --- */
         div[data-baseweb="input"], 
         div[data-baseweb="base-input"],
         div[data-baseweb="input"] > div,
         div[data-testid="stNumberInputContainer"],
         div[data-testid="stNumberInputContainer"] > div,
         .stTextInput > div > div,
-        .stNumberInput > div > div,
-        .stTextArea > div > div {{
+        .stNumberInput > div > div {{
             background-color: #FFFFFF !important;
             border-color: {THEME['border']} !important;
             color: {THEME['text_primary']} !important;
             border-radius: 10px !important;
         }}
 
-        /* 2. Styling elemen input langsung */
+        /* PERBAIKAN 3: Textarea Container & Border Light Theme */
+        div[data-baseweb="textarea"],
+        .stTextArea > div > div {{
+            background-color: #FFFFFF !important;
+            border: 1px solid {THEME['border']} !important;
+            border-radius: 10px !important;
+            box-shadow: none !important;
+        }}
+
         input[type="number"],
         input[type="text"],
         textarea {{
@@ -144,21 +156,22 @@ def apply_theme():
             border: none !important;
         }}
 
-        /* 3. Menghilangkan efek border hitam saat input sedang aktif/diklik */
+        /* Active Focus States */
         div[data-baseweb="input"]:focus-within,
-        div[data-testid="stNumberInputContainer"]:focus-within {{
+        div[data-testid="stNumberInputContainer"]:focus-within,
+        div[data-baseweb="textarea"]:focus-within {{
             border-color: {THEME['primary']} !important;
             box-shadow: 0 0 0 2px rgba(0, 166, 166, 0.2) !important;
         }}
 
-        /* 4. Perbaikan warna placeholder */
+        /* Placeholder Styling */
         ::placeholder, textarea::placeholder, input::placeholder {{
             color: {THEME['text_secondary']} !important;
             opacity: 0.7 !important;
             -webkit-text-fill-color: {THEME['text_secondary']} !important;
         }}
 
-        /* 5. Perbaikan Radio Button */
+        /* --- Radio Button Custom Styling --- */
         div[role="radiogroup"] label {{
             color: {THEME['text_primary']} !important;
             background-color: #FFFFFF !important;
@@ -168,7 +181,17 @@ def apply_theme():
             font-size: 13px !important;
         }}
 
-        /* 6. Perbaikan Tombol + / - pada Number Input */
+        /* PERBAIKAN 2: Radio Button Empty State (Warna Putih & Light Border) */
+        div[role="radiogroup"] div[data-checked="false"] div[data-testid="stRadioButtonCustomIcon"] {{
+            background-color: #FFFFFF !important;
+            border: 2px solid {THEME['border']} !important;
+        }}
+
+        div[role="radiogroup"] label div[data-checked="false"] svg {{
+            fill: #FFFFFF !important;
+        }}
+
+        /* Number Input Controls */
         div[data-testid="stNumberInputContainer"] button {{
             background-color: {THEME['primary_light']} !important;
             color: {THEME['primary_dark']} !important;
@@ -182,7 +205,7 @@ def apply_theme():
             color: #FFFFFF !important;
         }}
 
-        /* TOMBOL SUBMIT */
+        /* Submit Button */
         .stButton > button, div[data-testid="stFormSubmitButton"] > button {{
             background-color: {THEME['primary']} !important;
             color: #FFFFFF !important;
@@ -200,6 +223,7 @@ def apply_theme():
             background-color: {THEME['primary_dark']} !important;
         }}
 
+        /* Dynamic Badges & Cards */
         .result-box {{
             background-color: {THEME['background']};
             border: 1px solid {THEME['border']};
@@ -251,6 +275,7 @@ def apply_theme():
 
 
 def render_header():
+    
     st.markdown(f"""
         <div class="app-header">
             <div style="display: flex; align-items: center; gap: 12px;">
@@ -272,9 +297,10 @@ def render_header():
 
 
 def render_hero():
+    
     st.markdown(f"""
         <div class="hero-card">
-            <span class="pill-tag"><i class="fa-solid fa-ribbon"></i> Standar Permenkes RI No. 2/2020</span>
+            <span class="pill-tag"><i class="fa-solid fa-ribbon"></i> Standar Permenkes RI No. 2/2020 & World Health Organization</span>
             <h2 style="margin: 4px 0 8px 0; font-size: 20px; font-weight: 700; color: {THEME['text_primary']};">Deteksi Dini Tumbuh Kembang Anak</h2>
             <p style="margin: 0; font-size: 13px; color: {THEME['text_secondary']}; line-height: 1.5;">
                 Pantau pertumbuhan anak secara presisi dengan kalkulasi Z-Score antropometri dan rekomendasi nutrisi berbasis AI yang aman serta terpercaya.
@@ -284,6 +310,7 @@ def render_hero():
 
 
 def render_form():
+    
     st.markdown(f"""
         <div class="card-container">
             <div class="card-header">
@@ -351,6 +378,7 @@ def render_form():
 
 
 def render_result_dashboard(z_score, status, data_json):
+    
     st.markdown(f"""
         <div class="card-container">
             <div class="card-header">
@@ -378,7 +406,7 @@ def render_result_dashboard(z_score, status, data_json):
 
     st.markdown(f'<div style="border-top: 1px solid {THEME["border"]}; margin: 16px 0;"></div>', unsafe_allow_html=True)
 
-    # 1. Ringkasan
+    # 1. Ringkasan Kondisi
     st.markdown(f"""
         <div style="background-color: {THEME['primary_light']}; border: 1px solid rgba(0, 166, 166, 0.2); border-radius: 10px; padding: 14px; margin-bottom: 16px;">
             <div style="font-weight: 600; font-size: 13px; color: {THEME['primary_dark']}; margin-bottom: 4px;">
@@ -395,7 +423,7 @@ def render_result_dashboard(z_score, status, data_json):
     for item in data_json.get("rekomendasi_nutrisi", []):
         st.markdown(f'<div class="result-box"><i class="fa-solid fa-check" style="color: {THEME["success"]}; margin-right: 8px;"></i>{item}</div>', unsafe_allow_html=True)
 
-    # 3. Tindak Lanjut
+    # 3. Langkah Tindak Lanjut
     st.markdown(f'<h4 style="font-size: 13px; font-weight: 700; color: {THEME["text_primary"]}; margin-top: 16px; margin-bottom: 8px;"><i class="fa-solid fa-user-doctor" style="color: {THEME["info"]}; margin-right: 6px;"></i>Langkah Tindak Lanjut</h4>', unsafe_allow_html=True)
     for index, langkah in enumerate(data_json.get("tindak_lanjut", []), start=1):
         st.markdown(f'<div class="result-box"><span style="font-weight: 700; color: {THEME["primary"]}; margin-right: 8px;">0{index}.</span>{langkah}</div>', unsafe_allow_html=True)
@@ -404,6 +432,7 @@ def render_result_dashboard(z_score, status, data_json):
 
 
 def render_empty_state():
+    """Renders default state before form submission."""
     st.markdown(f"""
         <div class="card-container" style="text-align: center; padding: 40px 20px;">
             <div style="width: 48px; height: 48px; background-color: {THEME['background']}; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 12px auto; color: {THEME['text_secondary']}; font-size: 20px;">
@@ -418,6 +447,7 @@ def render_empty_state():
 
 
 def render_medical_disclaimer():
+    
     st.markdown(f"""
         <div class="disclaimer-card">
             <i class="fa-solid fa-circle-info" style="font-size: 16px; margin-top: 2px;"></i>
@@ -429,4 +459,5 @@ def render_medical_disclaimer():
 
 
 def render_footer():
+    
     render_medical_disclaimer()
