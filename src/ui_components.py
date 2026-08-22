@@ -270,6 +270,11 @@ def apply_theme():
         }}
 
         #MainMenu, footer {{visibility: hidden;}}
+
+    div[data-testid="InputInstructions"],
+        div[data-testid="stInputInstruction"] {{
+            display: none !important;
+        }}
     </style>
     """, unsafe_allow_html=True)
 
